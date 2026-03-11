@@ -8,6 +8,7 @@
 
 #ifndef BSP_UART_H
 #define BSP_UART_H
+#include <stdint.h>
 
 /**
  * @brief  Send data via UART2

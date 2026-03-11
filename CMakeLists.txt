@@ -48,6 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     #OSAL/src/osal_freertos.c
     BSP/bsp_led.c
     BSP/bsp_uart.c
+    BSP/bsp_button.c
 )
 
 # Add include paths

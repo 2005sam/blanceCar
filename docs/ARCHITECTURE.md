@@ -23,7 +23,7 @@ graph TD
 		motor
 		mpu6050
 		bsp_led
-		button
+		bspbutton
 	end
 	subgraph Component
 	end

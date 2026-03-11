@@ -22,4 +22,8 @@
 #define BSP_LED_VOLTAGE_3_GPIO_PORT GPIOA /**< GPIO port for voltage level 3 LED */
 #define BSP_LED_VOLTAGE_3_PIN GPIO_PIN_6  /**< GPIO pin for voltage level 3 LED */
 
+/* Button configuration */
+#define BSP_BUTTON_USERKEY_GPIO_PORT GPIOA /**< GPIO port for user key button */
+#define BSP_BUTTON_USERKEY_PIN GPIO_PIN_11 /**< GPIO pin for user key button */
+
 #endif /* BSP_CONFIG_H */
