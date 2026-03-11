@@ -17,8 +17,8 @@
 // Success and error codes
 typedef enum
 {
-  SUCCESS = 0,
-  ERROR = 1
+  RETURN_SUCCESS = 0,
+  RETURN_ERROR = 1
 } ReturnStatus;
 
 // Error levels
@@ -37,6 +37,7 @@ typedef enum
   MODULE_OSAL = 0x01,
   MODULE_HAL = 0x02,
   MODULE_UART = 0x03,
+  MODULE_LED = 0x04,
 } ModuleID;
 
 // Class
