@@ -30,4 +30,22 @@
 #define BSP_MOTOR_STBY_GPIO_PORT GPIOA /**< GPIO port for motor standby control */
 #define BSP_MOTOR_STBY_PIN GPIO_PIN_1  /**< GPIO pin for motor standby control */
 
+#define BSP_MOTOR_LEFT_IN1_GPIO_PORT GPIOA /**< GPIO port for left motor IN1 */
+#define BSP_MOTOR_LEFT_IN1_PIN GPIO_PIN_9  /**< GPIO pin for left motor IN1 */
+
+#define BSP_MOTOR_LEFT_IN2_GPIO_PORT GPIOA /**< GPIO port for left motor IN2 */
+#define BSP_MOTOR_LEFT_IN2_PIN GPIO_PIN_10 /**< GPIO pin for left motor IN2 */
+
+#define BSP_MOTOR_LEFT_PWM_TIMER TIM1            /**< Timer for left motor PWM control */
+#define BSP_MOTOR_LEFT_PWM_CHANNEL TIM_CHANNEL_1 /**< Timer channel for left motor PWM control */
+
+#define BSP_MOTOR_RIGHT_IN1_GPIO_PORT GPIOB /**< GPIO port for right motor IN1 */
+#define BSP_MOTOR_RIGHT_IN1_PIN GPIO_PIN_5  /**< GPIO pin for right motor IN1 */
+
+#define BSP_MOTOR_RIGHT_IN2_GPIO_PORT GPIOB /**< GPIO port for right motor IN2 */
+#define BSP_MOTOR_RIGHT_IN2_PIN GPIO_PIN_7  /**< GPIO pin for right motor IN2 */
+
+#define BSP_MOTOR_RIGHT_PWM_TIMER TIM4            /**< Timer for right motor PWM control */
+#define BSP_MOTOR_RIGHT_PWM_CHANNEL TIM_CHANNEL_1 /**< Timer channel for right motor PWM control */
+
 #endif /* BSP_CONFIG_H */
