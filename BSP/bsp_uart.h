@@ -16,6 +16,6 @@
  * @param  Size: Number of bytes to send
  * @retval Return code indicating success or error
  */
-uint32_t BSP_UART2_Send(uint8_t *pData, uint16_t Size);
-
+uint32_t BspUart2Send(uint8_t *pData, uint16_t Size);
+uint32_t BspUart2Printf(const char *format, ...);
 #endif /* BSP_UART_H */
