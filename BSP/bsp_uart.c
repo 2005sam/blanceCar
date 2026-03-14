@@ -30,7 +30,12 @@ uint32_t BspUart2Send(uint8_t *pData, uint16_t Size)
   }
   return MAKE_RETURN_CODE(SUCCESS, 0, MODULE_UART, ERR_TYPE_SUCCESS, 0);
 }
-
+/**
+ * @brief  Receive data via UART2
+ * @param  pData: Pointer to data buffer
+ * @param  Size: Number of bytes to receive
+ * @retval Return code indicating success or error
+ */
 uint32_t BspUart2Printf(const char *format, ...)
 {
   uint32_t ret = 0;

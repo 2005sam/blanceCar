@@ -16,19 +16,13 @@
 
 /**
  * @brief  Turn on the specified LED
- * @param  led: LED identifier (MOTOR_L, MOTOR_R, VOLTAGE_1, VOLTAGE_2, VOLTAGE_3)
+ * @param  led: LED identifier ( VOLTAGE_1, VOLTAGE_2, VOLTAGE_3)
  * @retval Return code indicating success or error
  */
-uint32_t LedLightOn(LED_ID led)
+uint32_t LedLightOn(LedId led)
 {
   switch (led)
   {
-  case MOTOR_L:
-    // Code to turn on MOTOR_L LED
-    break;
-  case MOTOR_R:
-    // Code to turn on MOTOR_R LED
-    break;
   case VOLTAGE_1:
     HAL_GPIO_WritePin(BSP_LED_VOLTAGE_1_GPIO_PORT, BSP_LED_VOLTAGE_1_PIN, GPIO_PIN_SET);
     break;
@@ -46,19 +40,13 @@ uint32_t LedLightOn(LED_ID led)
 
 /**
  * @brief  Turn off the specified LED
- * @param  led: LED identifier (MOTOR_L, MOTOR_R, VOLTAGE_1, VOLTAGE_2, VOLTAGE_3)
+ * @param  led: LED identifier ( VOLTAGE_1, VOLTAGE_2, VOLTAGE_3)
  * @retval Return code indicating success or error
  */
-uint32_t LedLightOff(LED_ID led)
+uint32_t LedLightOff(LedId led)
 {
   switch (led)
   {
-  case MOTOR_L:
-    // Code to turn off MOTOR_L LED
-    break;
-  case MOTOR_R:
-    // Code to turn off MOTOR_R LED
-    break;
   case VOLTAGE_1:
     HAL_GPIO_WritePin(BSP_LED_VOLTAGE_1_GPIO_PORT, BSP_LED_VOLTAGE_1_PIN, GPIO_PIN_RESET);
     break;

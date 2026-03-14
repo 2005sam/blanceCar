@@ -38,6 +38,8 @@ typedef enum
   MODULE_HAL = 0x02,
   MODULE_UART = 0x03,
   MODULE_LED = 0x04,
+  MODULE_BUTTON = 0x05,
+  MOUDLE_MOTOR = 0x06,
 } ModuleID;
 
 // Class

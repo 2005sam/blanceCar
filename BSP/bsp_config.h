@@ -26,4 +26,8 @@
 #define BSP_BUTTON_USERKEY_GPIO_PORT GPIOA /**< GPIO port for user key button */
 #define BSP_BUTTON_USERKEY_PIN GPIO_PIN_11 /**< GPIO pin for user key button */
 
+/* Motor driver configuration  */
+#define BSP_MOTOR_STBY_GPIO_PORT GPIOA /**< GPIO port for motor standby control */
+#define BSP_MOTOR_STBY_PIN GPIO_PIN_1  /**< GPIO pin for motor standby control */
+
 #endif /* BSP_CONFIG_H */
