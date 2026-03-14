@@ -2,8 +2,18 @@
 #include "bsp_config.h"
 #include "bsp_motor.h"
 
-char motor_status[MOTOR_COUNT] = {0};
-char motor_direction[MOTOR_COUNT] = {0};
+extern TIM_HandleTypeDef htim1;          // left motor PWM timer
+extern TIM_HandleTypeDef htim4;          // right motor PWM timer
+char motor_status[MOTOR_COUNT] = {0};    // status of motor (0: stop, 1: run)
+char motor_direction[MOTOR_COUNT] = {0}; // direction of motor (0: brake, 1: forward, 2: backward)
+float motor_pwm[MOTOR_COUNT] = {0};      // PWM duty cycle of motor (0.0 to 1.0)
+
+static uint32_t SetLeftMotorDirection(MotorDirection direction);
+static uint32_t SetRightMotorDirection(MotorDirection direction);
+static uint32_t SetMotorPWM(TIM_HandleTypeDef *htim, uint32_t channel, float dutyCycle);
+static uint32_t SetLeftMotorPWM(float dutyCycle);
+static uint32_t SetRightMotorPWM(float dutyCycle);
+
 /**
  * @brief  Start the specified motor
  * @param  motor: Motor identifier (MOTOR_LEFT or MOTOR_RIGHT)
@@ -48,9 +58,6 @@ uint32_t BspMotorStop(MotorId motor)
   return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR, MODULE_HAL, ERR_TYPE_BUSY, 0);
 }
 
-static uint32_t SetLeftMotorDirection(MotorDirection direction);
-static uint32_t SetRightMotorDirection(MotorDirection direction);
-
 /**
  * @brief  Set the direction of the specified motor
  * @param  motor: Motor identifier (MOTOR_LEFT or MOTOR_RIGHT)
@@ -81,6 +88,45 @@ uint32_t BspMotorDection(MotorId motor, MotorDirection direction)
   motor_direction[motor] = direction;
   return 0;
 }
+
+/**
+ * @brief  Set the PWM duty cycle of the specified motor
+ * @param  motor: Motor identifier (MOTOR_LEFT or MOTOR_RIGHT)
+ * @param  dutyCycle: Duty cycle (0.0 to 1.0)
+ * @retval Return code indicating success or error
+ */
+uint32_t BspMotorPWM(MotorId motor, float dutyCycle)
+{
+  switch (motor)
+  {
+  case BSP_MOTOR_LEFT:
+    return SetLeftMotorPWM(dutyCycle);
+    break;
+  case BSP_MOTOR_RIGHT:
+
+    return SetRightMotorPWM(dutyCycle);
+    break;
+  default:
+    return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
+                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+  }
+  motor_pwm[motor] = dutyCycle;
+  return 0;
+}
+
+/**
+ * @brief  Get the current status of the specified motor
+ * @param  motor: Motor identifier (MOTOR_LEFT or MOTOR_RIGHT)
+ * @retval Return motor Id
+ */
+MotorId BspMotorGetId(MotorId motor) { return motor_status[motor]; }
+
+/**
+ * @brief  Get the current direction of the specified motor
+ * @param  motor: Motor identifier (MOTOR_LEFT or MOTOR_RIGHT)
+ * @retval Return motor direction
+ */
+MotorDirection BspMotorGetDirection(MotorId motor) { return motor_direction[motor]; }
 
 /**
  * @brief  Get the current direction of the specified motor
@@ -155,3 +201,26 @@ static uint32_t SetRightMotorDirection(MotorDirection direction)
                             MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 }
+
+/**
+ * @brief  Set the PWM duty cycle of the specified motor
+ * @param  htim: Pointer to the TIM handle
+ * @param  channel: Timer channel
+ * @param  dutyCycle: Duty cycle (0.0 to 1.0)
+ * @retval Return code indicating success or error
+ */
+static uint32_t SetMotorPWM(TIM_HandleTypeDef *htim, uint32_t channel, float dutyCycle)
+{
+  uint32_t auto_reload_value = __HAL_TIM_GET_AUTORELOAD(htim);
+  uint32_t pulse = (uint32_t)(dutyCycle * auto_reload_value);
+  if (pulse > auto_reload_value)
+  {
+    return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
+                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+  }
+  __HAL_TIM_SET_COMPARE(htim, channel, pulse);
+  return 0;
+}
+
+static uint32_t SetLeftMotorPWM(float dutyCycle) { return SetMotorPWM(&htim1, BSP_MOTOR_LEFT_PWM_CHANNEL, dutyCycle); }   // set left motor pwm
+static uint32_t SetRightMotorPWM(float dutyCycle) { return SetMotorPWM(&htim4, BSP_MOTOR_RIGHT_PWM_CHANNEL, dutyCycle); } // set right motor pwm
