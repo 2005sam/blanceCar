@@ -76,6 +76,11 @@ uint32_t BspMotorDection(MotorId motor, MotorDirection direction)
   switch (motor)
   {
   case BSP_MOTOR_LEFT:
+    if (direction != BSP_MOTOR_DIRECTION_BRAKE)
+    {
+      direction = (1 - (direction - 1)) + 1;
+    }
+
     result = SetLeftMotorDirection(direction);
     break;
   case BSP_MOTOR_RIGHT:
