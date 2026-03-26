@@ -28,7 +28,10 @@ uint32_t BspMotorStart(MotorId motor)
       HAL_GPIO_WritePin(BSP_MOTOR_STBY_GPIO_PORT, BSP_MOTOR_STBY_PIN, GPIO_PIN_SET);
       motor_status[motor] = 1;
       return 0;
+      HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
     }
+
     motor_status[BSP_MOTOR_LEFT] = 1;
     motor_status[BSP_MOTOR_RIGHT] = 1;
     return 0;
@@ -50,6 +53,8 @@ uint32_t BspMotorStop(MotorId motor)
       HAL_GPIO_WritePin(BSP_MOTOR_STBY_GPIO_PORT, BSP_MOTOR_STBY_PIN, GPIO_PIN_RESET);
       motor_status[motor] = 0;
       return 0;
+      HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
     }
     motor_status[BSP_MOTOR_LEFT] = 0;
     motor_status[BSP_MOTOR_RIGHT] = 0;
