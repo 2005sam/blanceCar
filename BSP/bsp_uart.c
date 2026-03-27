@@ -23,7 +23,7 @@ extern UART_HandleTypeDef huart2;
 
 uint32_t BspUart2Init(void)
 {
-  HAL_UART_Receive_IT(&huart2, &rx_buffer_data, 1);
+  // HAL_UART_Receive_IT(&huart2, &rx_buffer_data, 1);
   return 0;
 }
 
@@ -66,23 +66,35 @@ uint32_t BspUart2Printf(const char *format, ...)
   return ret;
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-  if (huart->Instance == USART2)
-  {
+// void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+// {
+//   if (huart->Instance == USART2)
+//   {
 
-    rx_buffer_datas[rx_buffer_datas_cursor] = rx_buffer_data;
-    rx_buffer_datas_cursor++;
-    if (rx_buffer_data == '\n')
-    {
-      rx_buffer_datas_cursor = 0;
-    }
-    HAL_UART_Receive_IT(&huart2, &rx_buffer_data, 1);
-  }
+//     rx_buffer_datas[rx_buffer_datas_cursor] = rx_buffer_data;
+//     rx_buffer_datas_cursor++;
+//     if (rx_buffer_data == '\n')
+//     {
+//       rx_buffer_datas_cursor = 0;
+//     }
+//     HAL_UART_Receive_IT(&huart2, &rx_buffer_data, 1);
+//   }
+// }
+
+// uint32_t BspUart2Read(uint8_t *pData)
+// {
+//   pData = rx_buffer_datas;
+//   return 0;
+// }
+int fputc(int ch, FILE *f)
+{
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+  return ch;
 }
 
-uint32_t BspUart2Read(uint8_t *pData)
+int fgetc(FILE *f)
 {
-  pData = rx_buffer_datas;
-  return 0;
+  uint8_t ch;
+  HAL_UART_Receive(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+  return ch;
 }

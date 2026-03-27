@@ -93,7 +93,6 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
-  BspUart2Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
