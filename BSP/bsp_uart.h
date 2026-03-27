@@ -10,12 +10,10 @@
 #define BSP_UART_H
 #include <stdint.h>
 
-/**
- * @brief  Send data via UART2
- * @param  pData: Pointer to data buffer
- * @param  Size: Number of bytes to send
- * @retval Return code indicating success or error
- */
+#define RX_BUFFER_SIZE 10
+
+uint32_t BspUart2Init(void);
 uint32_t BspUart2Send(uint8_t *pData, uint16_t Size);
 uint32_t BspUart2Printf(const char *format, ...);
+uint32_t BspUart2Read(uint8_t *pData);
 #endif /* BSP_UART_H */
