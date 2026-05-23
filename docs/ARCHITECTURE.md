@@ -255,5 +255,6 @@ graph LR
 - [ ] **Application Tasks**: Implement control system, sensor reading, and Bluetooth communication tasks
 - [ ] **OSAL Integration**: Enable FreeRTOS via OSAL for task scheduling
 - [ ] **MPU6050 Driver**: Add IMU sensor driver for balance control
+- [ ] **Battery POWER** :Add battery power management
 - [ ] **Encoder Driver**: Add motor encoder for speed measurement
 - [ ] **PID Controller**: Implement balance control algorithm
