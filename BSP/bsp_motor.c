@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "error_codes.h"
 #include "bsp_config.h"
 #include "bsp_motor.h"
 
@@ -88,7 +89,7 @@ uint32_t BspMotorDection(MotorId motor, MotorDirection direction)
     break;
   default:
     return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
-                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+                            MODULE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 
   if (result != 0)
@@ -119,7 +120,7 @@ uint32_t BspMotorPWM(MotorId motor, float dutyCycle)
     break;
   default:
     return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
-                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+                            MODULE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
   }
   motor_pwm[motor] = dutyCycle;
   return 0;
@@ -179,7 +180,7 @@ static uint32_t SetLeftMotorDirection(MotorDirection direction)
     return 0;
   default:
     return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
-                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+                            MODULE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 }
 
@@ -209,7 +210,7 @@ static uint32_t SetRightMotorDirection(MotorDirection direction)
     return 0;
   default:
     return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
-                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+                            MODULE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 }
 
@@ -227,7 +228,7 @@ static uint32_t SetMotorPWM(TIM_HandleTypeDef *htim, uint32_t channel, float dut
   if (pulse > auto_reload_value)
   {
     return MAKE_RETURN_CODE(RETURN_ERROR, ERROR_LEVEL_MINOR,
-                            MOUDLE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
+                            MODULE_MOTOR, ERR_TYPE_INVALID_PARAM, 0);
   }
   __HAL_TIM_SET_COMPARE(htim, channel, pulse);
   return 0;

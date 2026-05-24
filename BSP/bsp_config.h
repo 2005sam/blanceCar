@@ -7,8 +7,8 @@
  * It defines GPIO pins and ports for various peripherals.
  */
 
-#ifndef BSP_CONFIG_H
-#define BSP_CONFIG_H
+#ifndef BSP_CONFIG_H_
+#define BSP_CONFIG_H_
 
 #include "stm32f1xx_hal.h"
 
@@ -48,4 +48,7 @@
 #define BSP_MOTOR_RIGHT_PWM_TIMER TIM4            /**< Timer for right motor PWM control */
 #define BSP_MOTOR_RIGHT_PWM_CHANNEL TIM_CHANNEL_1 /**< Timer channel for right motor PWM control */
 
-#endif /* BSP_CONFIG_H */
+/* Battery   */
+#define BSP_BATTERY_ADC_GPIO_PORT GPIOB /**< GPIO port for battery voltage ADC input */
+#define BSP_BATTERY_ADC_PIN GPIO_PIN_0  /**< GPIO pin for battery voltage ADC */
+#endif /* BSP_CONFIG_H_ */

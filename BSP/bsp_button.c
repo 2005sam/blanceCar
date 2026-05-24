@@ -1,14 +1,14 @@
 #include "bsp_button.h"
 
-USER_BUTTON_STATE UserButtonState = OFF;
+static UserButtonState user_button_state = BSP_BUTTON_OFF;
 
 uint32_t BspUserButtonHandeler(void)
 {
-  UserButtonState = !UserButtonState;
+  user_button_state = !user_button_state;
   return 0;
 }
-uint32_t BspUserButtonGetState(USER_BUTTON_STATE *state)
+uint32_t BspUserButtonGetState(UserButtonState *state)
 {
-  *state = UserButtonState;
+  *state = user_button_state;
   return 0;
 }

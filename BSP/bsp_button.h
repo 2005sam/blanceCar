@@ -1,13 +1,15 @@
-#ifndef __BSP_BUTTON_H
-#define __BSP_BUTTON_H
+#ifndef BSP_BUTTON_H_
+#define BSP_BUTTON_H_
 
 #include "stm32f1xx_hal.h"
+
 typedef enum
 {
-  ON = 0,
-  OFF = 1
-} USER_BUTTON_STATE;
-uint32_t BspUserButtonHandeler(void);
-uint32_t BspUserButtonGetState(USER_BUTTON_STATE *state);
+  BSP_BUTTON_ON = 0,
+  BSP_BUTTON_OFF = 1
+} UserButtonState;
 
-#endif
+uint32_t BspUserButtonHandeler(void);
+uint32_t BspUserButtonGetState(UserButtonState *state);
+
+#endif /* BSP_BUTTON_H_ */

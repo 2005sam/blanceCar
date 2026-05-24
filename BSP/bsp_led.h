@@ -7,8 +7,8 @@
  * It defines LED identifiers and function prototypes for LED control.
  */
 
-#ifndef BSP_LED_H
-#define BSP_LED_H
+#ifndef BSP_LED_H_
+#define BSP_LED_H_
 
 #include <stdint.h>
 
@@ -17,23 +17,17 @@
  */
 typedef enum
 {
-  VOLTAGE_1 = 2, /**< Voltage level 1 indicator LED */
-  VOLTAGE_2 = 3, /**< Voltage level 2 indicator LED */
-  VOLTAGE_3 = 4, /**< Voltage level 3 indicator LED */
+  BSP_LED_VOLTAGE_1 = 2, /**< Voltage level 1 indicator LED */
+  BSP_LED_VOLTAGE_2 = 3, /**< Voltage level 2 indicator LED */
+  BSP_LED_VOLTAGE_3 = 4, /**< Voltage level 3 indicator LED */
 } LedId;
 
 /**
  * @brief  Turn on the specified LED
- * @param  led: LED identifier(choosed from LED_ID)
+ * @param  led: LED identifier (choose from LedId)
  * @retval Return code indicating success or error
  */
-uint32_t LedLightOn(LedId led);
+uint32_t BspLedLightOn(LedId led);
+uint32_t BspLedLightOff(LedId led);
 
-/**
- * @param  led: LED identifier(choosed from LED_ID)
- * @brief  Turn off the specified LED
- * @retval Return code indicating success or error
- */
-uint32_t LedLightOff(LedId led);
-
-#endif /* BSP_LED_H */
+#endif /* BSP_LED_H_ */
