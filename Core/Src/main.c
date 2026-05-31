@@ -26,9 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include <bsp_uart.h>
-#include "bsp_battery.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,9 +58,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c)
-{
-}
 
 /* USER CODE END 0 */
 
@@ -102,7 +97,6 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  BspBatteryInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,10 +104,6 @@ int main(void)
   float adc_value;
   while (1)
   {
-    BspBatteryGetVoltage(&adc_value);
-    uint32_t value = adc_value * 1000;
-    BspUart2Printf("Battery Voltage: %d V\r\n", value);
-    HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
