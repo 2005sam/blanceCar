@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -27,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <bsp_uart.h>
+#include "bsp_battery.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +60,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+}
 
 /* USER CODE END 0 */
 
@@ -95,17 +100,19 @@ int main(void)
   MX_TIM4_Init();
   MX_ADC1_Init();
   MX_TIM2_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start(&htim2);
-  HAL_ADCEx_InjectedStart(&hadc1);
+  BspBatteryInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  float adc_value;
   while (1)
   {
-    uint32_t adc_value = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
-    BspUart2Printf("ADC Value: %ld\r\n", adc_value);
+    BspBatteryGetVoltage(&adc_value);
+    uint32_t value = adc_value * 1000;
+    BspUart2Printf("Battery Voltage: %d V\r\n", value);
     HAL_Delay(1000);
     /* USER CODE END WHILE */
 
