@@ -51,4 +51,11 @@
 /* Battery   */
 #define BSP_BATTERY_ADC_GPIO_PORT GPIOB /**< GPIO port for battery voltage ADC input */
 #define BSP_BATTERY_ADC_PIN GPIO_PIN_0  /**< GPIO pin for battery voltage ADC */
+
+/* MPU6050 Sensor configuration */
+#define BSP_MPU6050_I2C_ADDR 0x68        /**< MPU6050 I2C address (AD0 LOW) */
+#define BSP_MPU6050_I2C_TIMEOUT 100     /**< I2C communication timeout in ms */
+#define BSP_MPU6050_ACCEL_RANGE 0x00    /**< Accelerometer range: 00=±2g, 01=±4g, 10=±8g, 11=±16g */
+#define BSP_MPU6050_ACCEL_SCALE 16384.0f /**< Accelerometer LSB/g for ±2g range */
+#define BSP_MPU6050_SENSITIVITY 131.0f   /**< Gyroscope LSB/(deg/s) default */
 #endif /* BSP_CONFIG_H_ */
