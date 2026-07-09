@@ -26,9 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_mpu6050.h"
-#include "bsp_uart.h"
-#include "error_codes.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,40 +97,14 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  BspUart2Init();
-  uint32_t ret = BspMpu6050Init();
-  if (ret != RET_OK) {
-    BspUart2Printf("MPU6050 Init Failed: 0x%08lX\r\n", ret);
-    Error_Handler();
-  }
-  BspUart2Printf("MPU6050 Init OK\r\n");
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    int16_t ax, ay, az;
-    float pitch, roll, yaw;
 
-    BspMpu6050GetAccelX(&ax);
-    BspMpu6050GetAccelY(&ay);
-    BspMpu6050GetAccelZ(&az);
-    BspMpu6050GetPitch(&pitch);
-    BspMpu6050GetRoll(&roll);
-    BspMpu6050GetYaw(&yaw);
-
-    int16_t pitch_int = (int16_t)(pitch * 100.0f);
-    int16_t roll_int = (int16_t)(roll * 100.0f);
-    int16_t yaw_int = (int16_t)(yaw * 100.0f);
-
-    BspUart2Printf("ACC: X=%6d  Y=%6d  Z=%6d  |  P=%+5d.%02d  R=%+5d.%02d  Y=%+5d.%02d\r\n",
-                   ax, ay, az,
-                   pitch_int / 100, pitch_int > 0 ? pitch_int % 100 : -pitch_int % 100,
-                   roll_int / 100, roll_int > 0 ? roll_int % 100 : -roll_int % 100,
-                   yaw_int / 100, yaw_int > 0 ? yaw_int % 100 : -yaw_int % 100);
-
-    HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
