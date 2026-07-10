@@ -52,6 +52,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     BSP/bsp_motor.c
     BSP/bsp_battery.c
     BSP/bsp_mpu6050.c
+    BSP/bsp_encoder.c
 )
 
 # Add include paths

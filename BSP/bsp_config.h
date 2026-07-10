@@ -52,6 +52,16 @@
 #define BSP_BATTERY_ADC_GPIO_PORT GPIOB /**< GPIO port for battery voltage ADC input */
 #define BSP_BATTERY_ADC_PIN GPIO_PIN_0  /**< GPIO pin for battery voltage ADC */
 
+/* Encoder configuration */
+#define BSP_ENCODER_LEFT_A_GPIO_PORT  GPIOB /**< Left encoder phase A GPIO port */
+#define BSP_ENCODER_LEFT_A_PIN        GPIO_PIN_14 /**< Left encoder phase A pin */
+#define BSP_ENCODER_LEFT_B_GPIO_PORT  GPIOB /**< Left encoder phase B GPIO port */
+#define BSP_ENCODER_LEFT_B_PIN        GPIO_PIN_15 /**< Left encoder phase B pin */
+#define BSP_ENCODER_RIGHT_A_GPIO_PORT GPIOB /**< Right encoder phase A GPIO port */
+#define BSP_ENCODER_RIGHT_A_PIN       GPIO_PIN_3 /**< Right encoder phase A pin */
+#define BSP_ENCODER_RIGHT_B_GPIO_PORT GPIOB /**< Right encoder phase B GPIO port */
+#define BSP_ENCODER_RIGHT_B_PIN       GPIO_PIN_4 /**< Right encoder phase B pin */
+
 /* MPU6050 Sensor configuration */
 #define BSP_MPU6050_I2C_ADDR 0x68        /**< MPU6050 I2C address (AD0 LOW) */
 #define BSP_MPU6050_I2C_TIMEOUT 100     /**< I2C communication timeout in ms */
