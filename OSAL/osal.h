@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "settings.h"
+#include "error_codes.h"
 
 #ifdef __cplusplus
 extern "C"

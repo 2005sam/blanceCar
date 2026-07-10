@@ -80,7 +80,7 @@ uint32_t osal_task_create(const char *name,
 {
   if (name == NULL || func == NULL || task_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (stack_size < configMINIMAL_STACK_SIZE)
@@ -106,21 +106,21 @@ uint32_t osal_task_create(const char *name,
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_task_delete(osal_task_handle_t task_handle)
 {
   if (task_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   vTaskDelete((TaskHandle_t)task_handle);
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_task_delay(uint32_t ms)
@@ -134,7 +134,7 @@ uint32_t osal_task_delay(uint32_t ms)
     vTaskDelay(ms_to_ticks(ms));
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 void osal_task_yield(void)
@@ -153,12 +153,12 @@ uint32_t osal_task_get_name(osal_task_handle_t task_handle,
 {
   if (buffer == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (buffer_size == 0)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INVALID_PARAM, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 
   const char *name;
@@ -174,13 +174,13 @@ uint32_t osal_task_get_name(osal_task_handle_t task_handle,
   if (name == NULL)
   {
     buffer[0] = '\0';
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_DATA, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_DATA, 0);
   }
 
   strncpy(buffer, name, buffer_size - 1);
   buffer[buffer_size - 1] = '\0';
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 /* ========================================================================== */
@@ -194,7 +194,7 @@ uint32_t osal_semaphore_create(osal_semaphore_type_t type,
 {
   if (sem_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   SemaphoreHandle_t semaphore;
@@ -214,22 +214,22 @@ uint32_t osal_semaphore_create(osal_semaphore_type_t type,
 
   if (semaphore == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
   *sem_handle = (osal_semaphore_handle_t)semaphore;
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_semaphore_delete(osal_semaphore_handle_t sem_handle)
 {
   if (sem_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   vSemaphoreDelete((SemaphoreHandle_t)sem_handle);
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_semaphore_take(osal_semaphore_handle_t sem_handle,
@@ -237,7 +237,7 @@ uint32_t osal_semaphore_take(osal_semaphore_handle_t sem_handle,
 {
   if (sem_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   BaseType_t result = xSemaphoreTake((SemaphoreHandle_t)sem_handle,
@@ -245,27 +245,27 @@ uint32_t osal_semaphore_take(osal_semaphore_handle_t sem_handle,
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_semaphore_give(osal_semaphore_handle_t sem_handle)
 {
   if (sem_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   BaseType_t result = xSemaphoreGive((SemaphoreHandle_t)sem_handle);
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 /* ========================================================================== */
@@ -276,29 +276,29 @@ uint32_t osal_mutex_create(osal_mutex_handle_t *mutex_handle)
 {
   if (mutex_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
 
   if (mutex == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
   *mutex_handle = (osal_mutex_handle_t)mutex;
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_mutex_delete(osal_mutex_handle_t mutex_handle)
 {
   if (mutex_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   vSemaphoreDelete((SemaphoreHandle_t)mutex_handle);
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_mutex_lock(osal_mutex_handle_t mutex_handle,
@@ -306,7 +306,7 @@ uint32_t osal_mutex_lock(osal_mutex_handle_t mutex_handle,
 {
   if (mutex_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   BaseType_t result = xSemaphoreTake((SemaphoreHandle_t)mutex_handle,
@@ -314,27 +314,27 @@ uint32_t osal_mutex_lock(osal_mutex_handle_t mutex_handle,
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_mutex_unlock(osal_mutex_handle_t mutex_handle)
 {
   if (mutex_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   BaseType_t result = xSemaphoreGive((SemaphoreHandle_t)mutex_handle);
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 /* ========================================================================== */
@@ -347,34 +347,34 @@ uint32_t osal_queue_create(uint32_t item_size,
 {
   if (queue_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (item_size == 0 || queue_length == 0)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INVALID_PARAM, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 
   QueueHandle_t queue = xQueueCreate(queue_length, item_size);
 
   if (queue == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
   *queue_handle = (osal_queue_handle_t)queue;
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_queue_delete(osal_queue_handle_t queue_handle)
 {
   if (queue_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   vQueueDelete((QueueHandle_t)queue_handle);
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_queue_send(osal_queue_handle_t queue_handle,
@@ -383,7 +383,7 @@ uint32_t osal_queue_send(osal_queue_handle_t queue_handle,
 {
   if (queue_handle == NULL || item == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   BaseType_t result = xQueueSend((QueueHandle_t)queue_handle, item,
@@ -391,10 +391,10 @@ uint32_t osal_queue_send(osal_queue_handle_t queue_handle,
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_queue_receive(osal_queue_handle_t queue_handle,
@@ -403,7 +403,7 @@ uint32_t osal_queue_receive(osal_queue_handle_t queue_handle,
 {
   if (queue_handle == NULL || item == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   BaseType_t result = xQueueReceive((QueueHandle_t)queue_handle, item,
@@ -411,10 +411,10 @@ uint32_t osal_queue_receive(osal_queue_handle_t queue_handle,
 
   if (result != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_TIMEOUT, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_queue_get_waiting(osal_queue_handle_t queue_handle)
@@ -473,19 +473,19 @@ uint32_t osal_timer_create(const char *name,
 {
   if (name == NULL || callback == NULL || timer_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (period_ms == 0)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INVALID_PARAM, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INVALID_PARAM, 0);
   }
 
   /* Allocate memory for timer data */
   osal_timer_data_t *timer_data = (osal_timer_data_t *)pvPortMalloc(sizeof(osal_timer_data_t));
   if (timer_data == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
   timer_data->callback = callback;
@@ -499,7 +499,7 @@ uint32_t osal_timer_create(const char *name,
   if (timer == NULL)
   {
     vPortFree(timer_data);
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
   if (auto_start)
@@ -508,19 +508,19 @@ uint32_t osal_timer_create(const char *name,
     {
       xTimerDelete(timer, 0);
       vPortFree(timer_data);
-      return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INIT_FAIL, 0);
+      return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_INIT_FAIL, 0);
     }
   }
 
   *timer_handle = (osal_timer_handle_t)timer;
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_timer_delete(osal_timer_handle_t timer_handle)
 {
   if (timer_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   /* Free the timer data structure */
@@ -531,52 +531,52 @@ uint32_t osal_timer_delete(osal_timer_handle_t timer_handle)
   }
 
   xTimerDelete((TimerHandle_t)timer_handle, 0);
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_timer_start(osal_timer_handle_t timer_handle)
 {
   if (timer_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (xTimerStart((TimerHandle_t)timer_handle, 0) != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_timer_stop(osal_timer_handle_t timer_handle)
 {
   if (timer_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (xTimerStop((TimerHandle_t)timer_handle, 0) != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_timer_reset(osal_timer_handle_t timer_handle)
 {
   if (timer_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   if (xTimerReset((TimerHandle_t)timer_handle, 0) != pdPASS)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_OPERATION_DENIED, 0);
   }
 
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 /* ========================================================================== */
@@ -587,29 +587,29 @@ uint32_t osal_event_group_create(osal_event_group_handle_t *event_group_handle)
 {
   if (event_group_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   EventGroupHandle_t event_group = xEventGroupCreate();
 
   if (event_group == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NO_RESOURCE, 0);
   }
 
   *event_group_handle = (osal_event_group_handle_t)event_group;
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_event_group_delete(osal_event_group_handle_t event_group_handle)
 {
   if (event_group_handle == NULL)
   {
-    return make_osal_return(ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
+    return make_osal_return(RETURN_ERROR, ERROR_LEVEL_MINOR, ERR_TYPE_NULL_POINTER, 0);
   }
 
   vEventGroupDelete((EventGroupHandle_t)event_group_handle);
-  return make_osal_return(SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
+  return make_osal_return(RETURN_SUCCESS, ERROR_LEVEL_MINOR, ERR_TYPE_SUCCESS, 0);
 }
 
 uint32_t osal_event_group_set_bits(osal_event_group_handle_t event_group_handle,
